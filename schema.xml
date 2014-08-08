@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	You under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+<schema name="sessions" version="1.1">
+	<types>
+		<fieldType name="string" class="solr.StrField" />
+		<fieldType name="text" class="solr.TextField">
+			<analyzer>
+				<tokenizer class="solr.StandardTokenizerFactory" />
+				<filter class="solr.LowerCaseFilterFactory" />
+			</analyzer>
+		</fieldType>
+		<fieldType name="int" class="solr.TrieIntField" />
+		<fieldType name="long" class="solr.TrieLongField"
+			precisionStep="0" positionIncrementGap="0" />
+		<fieldType name="date" class="solr.TrieDateField"
+			precisionStep="0" positionIncrementGap="0" />
+		<fieldType name="boolean" class="solr.BoolField"
+			sortMissingLast="true" />
+		<fieldType name="tint" class="solr.TrieIntField"
+			precisionStep="8" positionIncrementGap="0" />
+		<fieldType name="tlong" class="solr.TrieLongField"
+			precisionStep="8" positionIncrementGap="0" />
+		<fieldType name="ip_address" class="solr.TextField">
+			<analyzer>
+				<tokenizer class="solr.PathHierarchyTokenizerFactory"
+					delimiter="." replace="." />
+			</analyzer>
+		</fieldType>
+	</types>
+	<fields>
+		<field name="session_date" type="int" indexed="true" stored="true" />
+		<field name="session_id" type="string" indexed="true" stored="true" />
+		<field name="session_starttime" type="long" indexed="true" stored="true" />
+		<field name="playstarted_event_ts" type="long" indexed="true" stored="true" />
+		<field name="session_stoptime" type="long" indexed="true" stored="true" />
+		<field name="user_id" type="string" indexed="true" stored="true" />
+		<field name="last_update_time" type="date" indexed="true" stored="true" />
+		<field name="device_type" type="int" indexed="true" stored="true" />
+		<field name="country_code" type="string" indexed="true" stored="true" />
+		<field name="signin_id" type="string" indexed="false" stored="true" />
+		<field name="user_first_name" type="string" indexed="false"	stored="true" />
+		<field name="device_id" type="string" indexed="false" stored="true" />
+		<field name="content_id" type="string" indexed="false" stored="true" />
+		<field name="content_purchase_format" type="int" indexed="true" stored="true" />
+		<field name="startup_latency" type="int" indexed="true" stored="true" />
+		<field name="rebuff_attempts" type="int" indexed="true" stored="true" />
+		<field name="actual_rebuff" type="int" indexed="false" stored="true" />
+		<field name="perceptible_rebuff" type="int" indexed="false" stored="true" />
+		<field name="seek_count" type="int" indexed="false" stored="true" />
+		<field name="percent_watched" type="int" indexed="false" stored="true" />
+		<field name="error_count" type="int" indexed="true" stored="true" />
+		<field name="event_count" type="int" indexed="false" stored="true" />
+		<field name="session_duration" type="int" indexed="true" stored="true" />
+		<field name="pqi" type="int" indexed="false" stored="true" />
+		<field name="content_title" type="string" indexed="false" stored="true" />
+		<field name="title_id" type="string" indexed="true" stored="true" />
+		<field name="content_purchase_type" type="string" indexed="true" stored="true" />
+		<field name="is_summary_complete" type="boolean" indexed="true" stored="true" />
+		<!--field name="client_ip" type="ip_address" indexed="false" stored="true" -->
+		<field name="first_event_ts" type="long" indexed="false" stored="true" />
+		<field name="last_event_ts" type="long" indexed="false" stored="true" />
+		<field name="id" type="string" indexed="true" stored="true" />
+	</fields>
+
+	<defaultSearchField>session_id</defaultSearchField>
+	<uniqueKey>(session_date, session_starttime, session_id)</uniqueKey>
+	<copyField source="session_id" dest="id" />
+	<!--copyField source="monthly_income_total" dest="all"/> <copyField source="income_group" 
+		dest="all"/> <copyField source="family_size" dest="all"/> <copyField source="family_sequence" 
+		dest="all"/> <copyField source="household_size" dest="all"/> <copyField source="age_months" 
+		dest="all"/> <copyField source="num_smokers" dest="all"/ -->
+
+</schema>
